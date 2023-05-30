@@ -1,6 +1,6 @@
 import requests
 
-url = 'https://example.com'  # Replace with the desired URL
+url = 'http://10.1.0.4:8000'  # Replace with the desired URL
 
 response = requests.get(url)
 
