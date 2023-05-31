@@ -9,7 +9,7 @@
 
     <?php
     // Send GET request
-    $url = 'http://11.1.0.4:8000';
+    $url = 'http://10.1.0.4:8000';
     $response = file_get_contents($url);
 
     // Display response
