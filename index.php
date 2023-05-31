@@ -9,21 +9,44 @@
 
     <?php
 
-    // Check if the form is submitted
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Get the question and document path from the form data
-        $question = $_POST['question'];
-        $document = $_POST['document'];
+    // Prompt for question and document path
+    $question = readline("Enter the question: ");
+    $document = readline("Enter the document path: ");
 
-        // Set the command to be executed
-        $command = 'curl -X GET "http://10.1.0.4:8000/qanda?question=' . urlencode($question) . '&document=' . urlencode($document) . '"';
+    // Set the request URL
+    $url = 'http://10.1.0.4:8000/qanda';
 
-        // Execute the command and capture the output
-        $output = exec($command);
+    // Set the request data
+    $data = array(
+        'question' => $question,
+        'document' => $document
+    );
 
+    // Initialize cURL session
+    $ch = curl_init();
+
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json'
+    ));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+    // Execute the request
+    $response = curl_exec($ch);
+
+    // Check for errors
+    if (curl_errno($ch)) {
+        echo 'Error: ' . curl_error($ch);
+    } else {
         // Output the response
-        echo $output;
+        echo $response;
     }
+
+    // Close cURL session
+    curl_close($ch);
+
     ?>
 
     <form method="POST">
