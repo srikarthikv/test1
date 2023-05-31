@@ -49,7 +49,7 @@
 
     ?>
 
-    <form method="POST">
+    <form action="/submit" method="POST">
         <label for="question">Question:</label>
         <input type="text" name="question" id="question" required><br>
 
