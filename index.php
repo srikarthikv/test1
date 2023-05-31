@@ -14,7 +14,7 @@
     $document = readline("Enter the document path: ");
 
     // Set the request URL
-    $url = 'http://10.1.0.4:8000/qanda';
+    $url = 'http://10.1.0.4:8000/submit';
 
     // Set the request data
     $data = array(
