@@ -16,7 +16,7 @@ function curlTwo() {
 
  
 
-  $url = 'http://127.0.0.1:8000/embedding'; // Enter your IP address/host here
+  $url = 'http://10.1.0.4:8000/embedding'; // Enter your IP address/host here
   $options = array(
     'http' => array(
       'method' => 'POST',
