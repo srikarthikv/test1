@@ -4,7 +4,7 @@
     <title>Q&A Form</title>
 </head>
 <body>
-    <form method="POST" action="https://mywebappbrt.azurewebsites.net/qanda">
+    <form method="POST" action="qanda">
         <label for="question">Question:</label>
         <input type="text" name="question" id="question" required><br>
 
