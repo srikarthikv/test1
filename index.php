@@ -11,7 +11,8 @@
 
     // Prompt for question and document path
     $question = readline("Enter the question: ");
-    $document = readline("Enter the document path: ");
+    $document = readline("Enter the document filename: ");
+    $documentPath = __DIR__ . '/' . $document;
 
     // Set the request URL
     $url = 'http://10.1.0.4:8000/qanda';
@@ -19,7 +20,7 @@
     // Set the request data
     $data = array(
         'question' => $question,
-        'document' => $document
+        'document' => $documentPath
     );
 
     // Initialize cURL session
@@ -50,7 +51,7 @@
         <label for="question">Question:</label>
         <input type="text" name="question" id="question" required><br>
 
-        <label for="document">Document Path:</label>
+        <label for="document">Document Filename:</label>
         <input type="text" name="document" id="document" required><br>
 
         <button type="submit">Submit</button>
