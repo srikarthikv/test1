@@ -15,9 +15,8 @@
     $url = 'http://10.1.0.4:8000/qanda';
 
     // Set the request data
-    $data = array(
-        'question' => $question,
-    );
+   // $data =        'question' => $question,
+   
 
     // Initialize cURL session
     $ch = curl_init();
@@ -25,7 +24,7 @@
     // Set cURL options
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($question));
 
     // Execute the request
     $response = curl_exec($ch);
