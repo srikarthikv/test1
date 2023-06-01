@@ -8,11 +8,8 @@
     <p>This is a PHP web app that sends a POST request.</p>
 
     <?php
-
-    // Prompt for question and document path
+    // Prompt for question
     $question = readline("Enter the question: ");
-    $document = readline("Enter the document filename: ");
-    $documentPath = __DIR__ . '/' . $document;
 
     // Set the request URL
     $url = 'http://10.1.0.4:8000/qanda';
@@ -20,7 +17,6 @@
     // Set the request data
     $data = array(
         'question' => $question,
-        'document' => $documentPath
     );
 
     // Initialize cURL session
@@ -44,7 +40,6 @@
 
     // Close cURL session
     curl_close($ch);
-
     ?>
 
     <form action="qanda" method="POST">
@@ -56,6 +51,5 @@
 
         <button type="submit">Submit</button>
     </form>
-
 </body>
 </html>
