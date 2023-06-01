@@ -49,7 +49,7 @@
 
     ?>
 
-    <form  method="POST">
+    <form action="qanda" method="POST">
         <label for="question">Question:</label>
         <input type="text" name="question" id="question" required><br>
 
