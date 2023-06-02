@@ -1,56 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PHP Web App</title>
+    <title>BRT-GPT</title>
 </head>
 <body>
-   <h1>Document Upload</h1>
+   <h1>QnA</h1>
 
-    <form action="" id="uploadForm" enctype="multipart/form-data">
-        <label for="document">Document:</label>
-        <input type="file" name="document" id="document" required><br>
+    <form action="" method="POST">
+        <label for="question">Question:</label>
+        <input type="text" name="question" id="question" required><br>
 
-        <button type="submit">Upload</button>
+        <button type="submit">Submit</button>
     </form>
-
-    <script>
-        document.getElementById('uploadForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            var fileInput = document.getElementById('document');
-            var file = fileInput.files[0];
-
-            var formData = new FormData();
-            formData.append('document', file);
-
-            fetch('http://10.1.0.4:8000/embedding', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    document: file.name
-                })
-            })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(data) {
-                console.log(data);
-                // Handle the response data as desired
-            })
-            .catch(function(error) {
-                console.log('Error:', error);
-            });
-        });
-    </script>
     <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve the question from the form
         $question = $_POST['question'];
 
         // Set the request URL
-        $url = 'http://10.1.0.4:8000/qanda';
+        $url = 'https://10.1.0.4:8000/question';
 
         // Set the request data
         $data = array(
@@ -81,13 +49,5 @@
     }
     ?>
 
-    <form action="" method="POST">
-        <label for="question">Question:</label>
-        <input type="text" name="question" id="question" required><br>
-        <label for="document">Document:</label>
-        <input type="text" name="document" id="document" required><br>
-
-        <button type="submit">Submit</button>
-    </form>
 </body>
 </html>
