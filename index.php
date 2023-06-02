@@ -4,10 +4,9 @@
     <title>PHP Web App</title>
 </head>
 <body>
-    <h1>Hello, PHP!</h1>
-    <p>This is a PHP web app that sends a POST request.</p>
-    <h1>Document Upload</h1>
-    <form action="" method="POST" enctype="multipart/form-data">
+   <h1>Document Upload</h1>
+
+    <form id="uploadForm" enctype="multipart/form-data">
         <label for="document">Document:</label>
         <input type="file" name="document" id="document" required><br>
 
@@ -15,16 +14,23 @@
     </form>
 
     <script>
-        document.querySelector('form').addEventListener('submit', function(event) {
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            var form = document.querySelector('form');
-            var formData = new FormData(form);
+            var fileInput = document.getElementById('document');
+            var file = fileInput.files[0];
 
-            fetch('http://10.1.0.4:8000/embedding', {
+            var formData = new FormData();
+            formData.append('document', file);
+
+            fetch('http://127.0.0.1:8000/embedding', {
                 method: 'POST',
-                mode: 'cors',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    document: file.name
+                })
             })
             .then(function(response) {
                 return response.json();
