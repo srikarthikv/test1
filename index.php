@@ -7,7 +7,7 @@
     <h1>Hello, PHP!</h1>
     <p>This is a PHP web app that sends a POST request.</p>
     <h1>Document Upload</h1>
-    <form action="/embedding" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         <label for="document">Document:</label>
         <input type="file" name="document" id="document" required><br>
 
