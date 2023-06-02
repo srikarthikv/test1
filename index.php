@@ -4,7 +4,7 @@
     <title>PHP Web App</title>
 </head>
 <body>
-    <h1>Hello, ChstGPT Demo!</h1>
+    <h1>Hello, ChatGPT Demo!</h1>
     <p>This is a PHP web app that sends a GET/POST request to the Azure ChatGPT Engine.</p>
 
     <?php
