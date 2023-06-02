@@ -23,7 +23,7 @@
             var formData = new FormData();
             formData.append('document', file);
 
-            fetch('http://127.0.0.1:8000/embedding', {
+            fetch('http://10.1.0.4:8000/embedding', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
