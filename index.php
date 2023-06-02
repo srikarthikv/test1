@@ -84,6 +84,8 @@
     <form action="" method="POST">
         <label for="question">Question:</label>
         <input type="text" name="question" id="question" required><br>
+        <label for="document">Question:</label>
+        <input type="text" name="document" id="document" required><br>
 
         <button type="submit">Submit</button>
     </form>
