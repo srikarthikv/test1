@@ -6,7 +6,7 @@
 <body>
    <h1>Document Upload</h1>
 
-    <form id="uploadForm" enctype="multipart/form-data">
+    <form action="" id="uploadForm" enctype="multipart/form-data">
         <label for="document">Document:</label>
         <input type="file" name="document" id="document" required><br>
 
