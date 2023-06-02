@@ -21,7 +21,7 @@
             var form = document.querySelector('form');
             var formData = new FormData(form);
 
-            fetch('/embedding', {
+            fetch('http://10.1.0.4:8000/embedding', {
                 method: 'POST',
                 mode: 'cors',
                 body: formData
