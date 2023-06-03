@@ -46,7 +46,7 @@
         }
 
         .user-message {
-            background-color: skyblue;
+            background-color: #4CAF50;
             color: white;
             padding: 10px;
             border-radius: 5px;
