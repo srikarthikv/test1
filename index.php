@@ -26,7 +26,7 @@
         }
 
         .chat-header {
-            background-color: #4CAF50;
+            background-color: skyblue;
             color: white;
             padding: 10px;
             border-top-left-radius: 5px;
@@ -44,11 +44,11 @@
         }
 
         .user-message {
-            background-color: #4CAF50;
+            background-color: skyblue;
             color: white;
             padding: 10px;
             border-radius: 5px;
-            align-self: flex-start;
+            align-self: flex-end;
             max-width: 60%;
         }
 
@@ -57,7 +57,7 @@
             color: #333;
             padding: 10px;
             border-radius: 5px;
-            align-self: flex-end;
+            align-self: flex-start;
             max-width: 60%;
         }
 
@@ -77,7 +77,7 @@
         .input-container button[type="submit"] {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #4CAF50;
+            background-color: skyblue;
             color: white;
             border: none;
             border-radius: 3px;
@@ -87,15 +87,16 @@
 
         .options-container {
             margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .options-container label {
-            display: block;
-            margin-bottom: 5px;
+            margin-right: 10px;
         }
 
         .options-container select {
-            width: 100%;
             padding: 5px;
             font-size: 16px;
             border: 1px solid #ccc;
@@ -112,24 +113,23 @@
             <div class="message bot-message">Welcome! How can I assist you today?</div>
         </div>
         <form action="" method="POST">
-            <div class="input-container">
-                <input type="text" name="question" id="question" required>
-                <button type="submit">Send</button>
-            </div>
             <div class="options-container">
-                <label for="options">Select an option:</label>
-                <select name="options" id="options">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
+                <label for="compress-option">Compress:</label>
+                <select name="compress-option" id="compress-option">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                 </select>
+                <div class="input-container">
+                    <input type="text" name="question" id="question" required>
+                    <button type="submit">Send</button>
+                </div>
             </div>
         </form>
         <?php
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve the question from the form
             $question = $_POST['question'];
-            $selectedOption = $_POST['options'];
+            $compressOption = $_POST['compress-option'];
 
             // Set the request URL
             $url = 'https://10.1.0.4:8000/question';
@@ -137,7 +137,7 @@
             // Set the request data
             $data = array(
                 'question' => $question,
-                'option' => $selectedOption,
+                'compress' => $compressOption,
             );
 
             // Initialize cURL session
