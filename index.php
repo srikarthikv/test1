@@ -9,14 +9,16 @@
             padding: 0;
             background-color: #f1f1f1;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
             min-height: 100vh;
         }
 
         .chat-container {
-            width: 100%;
+            width: 80%;
             max-width: 600px;
+            height: 80%;
+            max-height: 600px;
             margin-bottom: 20px;
             display: flex;
             flex-direction: column;
@@ -49,7 +51,7 @@
             padding: 10px;
             border-radius: 5px;
             align-self: flex-end;
-            max-width: 60%;
+            max-width: 70%;
         }
 
         .bot-message {
@@ -58,12 +60,13 @@
             padding: 10px;
             border-radius: 5px;
             align-self: flex-start;
-            max-width: 60%;
+            max-width: 70%;
         }
 
         .input-container {
             display: flex;
             margin-top: 10px;
+            padding: 0 20px;
         }
 
         .input-container input[type="text"] {
@@ -90,6 +93,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 20px;
         }
 
         .options-container label {
@@ -119,10 +123,10 @@
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                 </select>
-                <div class="input-container">
-                    <input type="text" name="question" id="question" required>
-                    <button type="submit">Send</button>
-                </div>
+            </div>
+            <div class="input-container">
+                <input type="text" name="question" id="question" required>
+                <button type="submit">Send</button>
             </div>
         </form>
         <?php
