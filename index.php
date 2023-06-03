@@ -42,7 +42,7 @@
         }
 
         .message {
-            margin-bottom: 10px;
+            margin: 10px 10px;
         }
 
         .user-message {
