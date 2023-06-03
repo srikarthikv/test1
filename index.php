@@ -2,6 +2,54 @@
 <html>
 <head>
     <title>BRT-GPT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .response {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
    <h1>QnA</h1>
@@ -44,7 +92,7 @@
             echo 'Error: ' . curl_error($ch);
         } else {
             // Output the response
-            echo $response;
+            echo '<div class="response">' . $response . '</div>';
         }
 
         // Close cURL session
