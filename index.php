@@ -5,16 +5,38 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            min-height: 100vh;
         }
 
         .chat-container {
+            width: 100%;
             max-width: 600px;
-            margin: 0 auto;
-            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
             border-radius: 5px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .chat-body {
+            flex-grow: 1;
             padding: 20px;
-            background-color: #f2f2f2;
+            overflow-y: auto;
         }
 
         .message {
@@ -27,6 +49,7 @@
             padding: 10px;
             border-radius: 5px;
             align-self: flex-start;
+            max-width: 60%;
         }
 
         .bot-message {
@@ -35,10 +58,12 @@
             padding: 10px;
             border-radius: 5px;
             align-self: flex-end;
+            max-width: 60%;
         }
 
         .input-container {
             display: flex;
+            margin-top: 10px;
         }
 
         .input-container input[type="text"] {
@@ -59,21 +84,52 @@
             cursor: pointer;
             margin-left: 10px;
         }
+
+        .options-container {
+            margin-top: 10px;
+        }
+
+        .options-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .options-container select {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
     <div class="chat-container">
-        <div class="message bot-message">Welcome! How can I assist you today?</div>
+        <div class="chat-header">
+            <h1>BRT-GPT</h1>
+        </div>
+        <div class="chat-body">
+            <div class="message bot-message">Welcome! How can I assist you today?</div>
+        </div>
         <form action="" method="POST">
             <div class="input-container">
                 <input type="text" name="question" id="question" required>
                 <button type="submit">Send</button>
+            </div>
+            <div class="options-container">
+                <label for="options">Select an option:</label>
+                <select name="options" id="options">
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                </select>
             </div>
         </form>
         <?php
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve the question from the form
             $question = $_POST['question'];
+            $selectedOption = $_POST['options'];
 
             // Set the request URL
             $url = 'https://10.1.0.4:8000/question';
@@ -81,6 +137,7 @@
             // Set the request data
             $data = array(
                 'question' => $question,
+                'option' => $selectedOption,
             );
 
             // Initialize cURL session
