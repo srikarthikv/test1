@@ -63,7 +63,16 @@
             align-self: flex-start;
             max-width: 70%;
             opacity: 0;
-            animation: messageAppear 0.3s ease-in-out forwards, typeWriter 4s linear 0.3s infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: messageAppear 0.3s ease-in-out forwards;
+        }
+
+        .bot-message.typing::after {
+            content: "";
+            display: inline-block;
+            width: 0;
+            animation: typing 1s steps(40) 0s infinite;
         }
 
         .input-container {
@@ -114,19 +123,17 @@
         @keyframes messageAppear {
             0% {
                 opacity: 0;
-                transform: translateY(10px);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0);
             }
         }
 
-        @keyframes typeWriter {
-            from {
+        @keyframes typing {
+            0% {
                 width: 0;
             }
-            to {
+            100% {
                 width: 100%;
             }
         }
@@ -138,7 +145,7 @@
             <h1>BRT-GPT</h1>
         </div>
         <div class="chat-body">
-            <div class="message bot-message" style="animation-delay: 0.5s;">Welcome! How can I assist you today?</div>
+            <div class="message bot-message">Welcome! How can I assist you today?</div>
         </div>
         <form action="" method="POST">
             <div class="input-container">
@@ -188,8 +195,8 @@
             } else {
                 // Output the user's message
                 echo '<div class="message user-message">' . $question . '</div>';
-                // Output the bot's response with delay and typewriter animation
-                echo '<div class="message bot-message" style="animation-delay: 0.5s">' . $response . '</div>';
+                // Output the bot's response with typing animation
+                echo '<div class="message bot-message typing">' . $response . '</div>';
             }
 
             // Close cURL session
