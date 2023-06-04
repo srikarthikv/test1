@@ -12,6 +12,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            flex-direction: column;
         }
 
         .chat-container {
@@ -43,6 +44,7 @@
 
         .message {
             margin: 10px 10px;
+            animation: fade-in 0.5s ease-in-out;
         }
 
         .user-message {
@@ -52,6 +54,7 @@
             border-radius: 5px;
             align-self: flex-end;
             max-width: 70%;
+            animation: fade-in 0.5s ease-in-out;
         }
 
         .bot-message {
@@ -61,11 +64,16 @@
             border-radius: 5px;
             align-self: flex-start;
             max-width: 70%;
+            animation: typewriter 2s steps(40) 1s forwards, fade-in 0.5s ease-in-out;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #333;
         }
 
         .input-container {
             display: flex;
-            margin-top: 10px;
+            align-self: flex-end;
+            margin-top: auto;
             padding: 0 20px;
         }
 
@@ -106,6 +114,24 @@
             border: 1px solid #ccc;
             border-radius: 3px;
         }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -124,11 +150,11 @@
                     <option value="no">No</option>
                 </select>
             </div>
-            <div class="input-container">
-                <input type="text" name="question" id="question" required>
-                <button type="submit">Send</button>
-            </div>
         </form>
+        <div class="input-container">
+            <input type="text" name="question" id="question" required>
+            <button type="submit">Send</button>
+        </div>
         <?php
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve the question from the form
@@ -162,9 +188,9 @@
             if (curl_errno($ch)) {
                 echo '<div class="message bot-message">Error: ' . curl_error($ch) . '</div>';
             } else {
-                // Output the user's message
+                // Output the user's message with a slight delay
                 echo '<div class="message user-message">' . $question . '</div>';
-                // Output the bot's response
+                // Output the bot's response with a typewriter animation and delay
                 echo '<div class="message bot-message">' . $response . '</div>';
             }
 
