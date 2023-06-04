@@ -9,10 +9,9 @@
             padding: 0;
             background-color: #f1f1f1;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
             flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .chat-container {
@@ -20,12 +19,12 @@
             max-width: 600px;
             height: 80%;
             max-height: 600px;
-            margin-bottom: 20px;
             display: flex;
             flex-direction: column;
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
 
         .chat-header {
@@ -43,8 +42,7 @@
         }
 
         .message {
-            margin: 10px 10px;
-            animation: fade-in 0.5s ease-in-out;
+            margin: 10px 0;
         }
 
         .user-message {
@@ -54,7 +52,7 @@
             border-radius: 5px;
             align-self: flex-end;
             max-width: 70%;
-            animation: fade-in 0.5s ease-in-out;
+            animation: messageAppear 0.3s ease-in-out forwards;
         }
 
         .bot-message {
@@ -64,17 +62,15 @@
             border-radius: 5px;
             align-self: flex-start;
             max-width: 70%;
-            animation: typewriter 2s steps(40) 1s forwards, fade-in 0.5s ease-in-out;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid #333;
+            opacity: 0;
+            animation: messageAppear 0.3s ease-in-out forwards, typeWriter 4s linear 0.3s infinite;
         }
 
         .input-container {
             display: flex;
-            align-self: flex-end;
-            margin-top: auto;
+            justify-content: space-between;
             padding: 0 20px;
+            margin-top: auto;
         }
 
         .input-container input[type="text"] {
@@ -97,11 +93,11 @@
         }
 
         .options-container {
-            margin-top: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
+            margin-top: 10px;
         }
 
         .options-container label {
@@ -115,21 +111,23 @@
             border-radius: 3px;
         }
 
-        @keyframes typewriter {
+        @keyframes messageAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes typeWriter {
             from {
                 width: 0;
             }
             to {
                 width: 100%;
-            }
-        }
-
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
             }
         }
     </style>
@@ -140,9 +138,13 @@
             <h1>BRT-GPT</h1>
         </div>
         <div class="chat-body">
-            <div class="message bot-message">Welcome! How can I assist you today?</div>
+            <div class="message bot-message" style="animation-delay: 0.5s;">Welcome! How can I assist you today?</div>
         </div>
         <form action="" method="POST">
+            <div class="input-container">
+                <input type="text" name="question" id="question" required>
+                <button type="submit">Send</button>
+            </div>
             <div class="options-container">
                 <label for="compress-option">Compress:</label>
                 <select name="compress-option" id="compress-option">
@@ -151,10 +153,6 @@
                 </select>
             </div>
         </form>
-        <div class="input-container">
-            <input type="text" name="question" id="question" required>
-            <button type="submit">Send</button>
-        </div>
         <?php
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve the question from the form
@@ -188,10 +186,10 @@
             if (curl_errno($ch)) {
                 echo '<div class="message bot-message">Error: ' . curl_error($ch) . '</div>';
             } else {
-                // Output the user's message with a slight delay
+                // Output the user's message
                 echo '<div class="message user-message">' . $question . '</div>';
-                // Output the bot's response with a typewriter animation and delay
-                echo '<div class="message bot-message">' . $response . '</div>';
+                // Output the bot's response with delay and typewriter animation
+                echo '<div class="message bot-message" style="animation-delay: 0.5s">' . $response . '</div>';
             }
 
             // Close cURL session
