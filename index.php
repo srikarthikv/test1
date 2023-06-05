@@ -4,14 +4,56 @@
     <title>PHP Web App</title>
 </head>
 <body>
-   <h1>Document Upload</h1>
+    <h1>Document Upload</h1>
 
-    <form action="" id="uploadForm" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         <label for="document">Document:</label>
         <input type="file" name="document" id="document" required><br>
 
         <button type="submit">Upload</button>
     </form>
+
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Retrieve the document file
+        $documentFile = $_FILES['document'];
+
+        // Set the URL of the server
+        $url = 'http://your-server-url/qanda';
+
+        // Create a cURL handle
+        $curl = curl_init();
+
+        // Set the cURL options
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+
+        // Create an array with the POST data
+        $postData = array(
+            'document' => curl_file_create($documentFile['tmp_name'], $documentFile['type'], $documentFile['name'])
+        );
+
+        // Set the POST data
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
+
+        // Execute the request and get the response
+        $response = curl_exec($curl);
+
+        // Check for cURL errors
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);
+            // Handle the error
+            // ...
+        } else {
+            // Process the response
+            // ...
+        }
+
+        // Close the cURL handle
+        curl_close($curl);
+    }
+    ?>
 
     <script>
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
@@ -44,48 +86,12 @@
             });
         });
     </script>
-    <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Retrieve the question from the form
-        $question = $_POST['question'];
-
-        // Set the request URL
-        $url = 'http://10.1.0.4:8000/qanda';
-
-        // Set the request data
-        $data = array(
-            'question' => $question,
-        );
-
-        // Initialize cURL session
-        $ch = curl_init();
-
-        // Set cURL options
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-
-        // Execute the request
-        $response = curl_exec($ch);
-
-        // Check for errors
-        if (curl_errno($ch)) {
-            echo 'Error: ' . curl_error($ch);
-        } else {
-            // Output the response
-            echo $response;
-        }
-
-        // Close cURL session
-        curl_close($ch);
-    }
-    ?>
 
     <form action="" method="POST">
         <label for="question">Question:</label>
         <input type="text" name="question" id="question" required><br>
         <label for="document">Document:</label>
-        <input type="text" name="document" id="document" required><br>
+        <input type="file" name="document" id="document" required><br>
 
         <button type="submit">Submit</button>
     </form>
