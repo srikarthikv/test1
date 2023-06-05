@@ -63,41 +63,78 @@
             align-self: flex-start;
             max-width: 70%;
             opacity: 0;
+            white-space: nowrap;
+            overflow: hidden;
             animation: messageAppear 0.3s ease-in-out forwards;
         }
 
-        .typing-indicator {
-            height: 1em;
-            background-color: #e5e5ea;
-            border-radius: 5px;
-            animation: typing 1s linear infinite;
-            opacity: 0;
-            margin-bottom: 10px;
+        .bot-message.typing::after {
+            content: "";
+            display: inline-block;
+            width: 0;
+            animation: typing 1s steps(40) 0s infinite;
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-top: auto;
+        }
+
+        .input-container input[type="text"] {
+            flex: 1;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .input-container button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: skyblue;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .options-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            margin-top: 10px;
+        }
+
+        .options-container label {
+            margin-right: 10px;
+        }
+
+        .options-container select {
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
         }
 
         @keyframes messageAppear {
             0% {
                 opacity: 0;
-                transform: translateY(10px);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0);
             }
         }
 
         @keyframes typing {
             0% {
                 width: 0;
-                opacity: 0.5;
-            }
-            50% {
-                width: 100%;
-                opacity: 1;
             }
             100% {
-                width: 0;
-                opacity: 0.5;
+                width: 100%;
             }
         }
     </style>
@@ -108,7 +145,7 @@
             <h1>BRT-GPT</h1>
         </div>
         <div class="chat-body">
-            <div class="message bot-message" style="animation-delay: 0.5s;">Welcome! How can I assist you today?</div>
+            <div class="message bot-message">Welcome! How can I assist you today?</div>
         </div>
         <form action="" method="POST">
             <div class="input-container">
@@ -158,10 +195,8 @@
             } else {
                 // Output the user's message
                 echo '<div class="message user-message">' . $question . '</div>';
-                // Output the typing indicator
-                echo '<div class="typing-indicator"></div>';
                 // Output the bot's response with typing animation
-                echo '<div class="message bot-message" style="animation-delay: 0.5s"><span class="typing-animation">' . $response . '</span></div>';
+                echo '<div class="message bot-message typing">' . $response . '</div>';
             }
 
             // Close cURL session
@@ -169,33 +204,5 @@
         }
         ?>
     </div>
-
-    <script>
-        // Delay and animate the bot message after the typing indicator
-        setTimeout(function() {
-            var botMessage = document.querySelector('.bot-message');
-            botMessage.style.opacity = 1;
-            var typingIndicator = document.querySelector('.typing-indicator');
-            typingIndicator.style.opacity = 0;
-            typingIndicator.style.display = 'none';
-            animateBotMessage(botMessage);
-        }, 2000);
-
-        // Animate the bot message with typewriter effect
-        function animateBotMessage(message) {
-            var messageText = message.querySelector('.typing-animation').textContent;
-            message.innerHTML = '';
-
-            var delay = 100;
-            var i = 0;
-            var typing = setInterval(function() {
-                message.innerHTML += messageText.charAt(i);
-                i++;
-                if (i > messageText.length) {
-                    clearInterval(typing);
-                }
-            }, delay);
-        }
-    </script>
 </body>
 </html>
