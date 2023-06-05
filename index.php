@@ -1,99 +1,49 @@
+<?php
+require_once 'autoload.php'; // Load the required Azure Blob Storage SDK
+
+use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+
+$connectionString = 'DefaultEndpointsProtocol=https;AccountName=gptdemo7020140432;AccountKey=k3z0/JCQH3yV/9iSceGe+s1dtdIUbp8anSUQ/a0sDsrw34tuFHfd7usPn42bCvjaUdzlfpNvA09O+AStCRDO3w==;EndpointSuffix=core.windows.net';
+$containerName = 'azureml-blobstore-fa29c537-9f94-4f15-8679-5f1e2fd597e4';
+$directoryName = 'documents/';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $file = $_FILES["fileToUpload"];
+
+    if ($file["error"] === UPLOAD_ERR_OK) {
+        $fileName = $file["name"];
+        $fileTempPath = $file["tmp_name"];
+        $fileSize = $file["size"];
+
+        $blobClient = BlobRestProxy::createBlobService($connectionString);
+
+        // Generate a unique name for the blob using a GUID
+        $uniqueBlobName = $directoryName . uniqid() . '-' . $fileName;
+
+        // Set the blob options
+        $options = new CreateBlockBlobOptions();
+        $options->setContentType($file["type"]);
+
+        // Upload the file to Azure Blob Storage
+        $blobClient->createBlockBlob($containerName, $uniqueBlobName, fopen($fileTempPath, "r"), $options);
+
+        echo "File uploaded successfully. Blob name: $uniqueBlobName";
+    } else {
+        echo "Error uploading file. Error code: " . $file["error"];
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
-<head>
-    <title>PHP Web App</title>
-</head>
 <body>
-    <h1>Document Upload</h1>
+    <h1>File Upload</h1>
 
     <form action="" method="POST" enctype="multipart/form-data">
-        <label for="document">Document:</label>
-        <input type="file" name="document" id="document" required><br>
-
-        <button type="submit">Upload</button>
-    </form>
-
-    <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Retrieve the document file
-        $documentFile = $_FILES['document'];
-
-        // Set the URL of the server
-        $url = 'http://your-server-url/qanda';
-
-        // Create a cURL handle
-        $curl = curl_init();
-
-        // Set the cURL options
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-
-        // Create an array with the POST data
-        $postData = array(
-            'document' => curl_file_create($documentFile['tmp_name'], $documentFile['type'], $documentFile['name'])
-        );
-
-        // Set the POST data
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
-
-        // Execute the request and get the response
-        $response = curl_exec($curl);
-
-        // Check for cURL errors
-        if (curl_errno($curl)) {
-            $error = curl_error($curl);
-            // Handle the error
-            // ...
-        } else {
-            // Process the response
-            // ...
-        }
-
-        // Close the cURL handle
-        curl_close($curl);
-    }
-    ?>
-
-    <script>
-        document.getElementById('uploadForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            var fileInput = document.getElementById('document');
-            var file = fileInput.files[0];
-
-            var formData = new FormData();
-            formData.append('document', file);
-
-            fetch('http://10.1.0.4:8000/embedding', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    document: file.name
-                })
-            })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(data) {
-                console.log(data);
-                // Handle the response data as desired
-            })
-            .catch(function(error) {
-                console.log('Error:', error);
-            });
-        });
-    </script>
-
-    <form action="" method="POST">
-        <label for="question">Question:</label>
-        <input type="text" name="question" id="question" required><br>
-        <label for="document">Document:</label>
-        <input type="file" name="document" id="document" required><br>
-
-        <button type="submit">Submit</button>
+        <label for="fileToUpload">Select file (PDF or TXT):</label>
+        <input type="file" name="fileToUpload" id="fileToUpload" accept=".pdf,.txt"><br>
+        <button type="submit">Upload File</button>
     </form>
 </body>
 </html>
