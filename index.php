@@ -38,7 +38,7 @@
         $file = $_FILES['uploadedFile'];
 
         // Generate a unique name for the file
-        $fileName = $directoryName . uniqid() . '_' . $file['name'];
+        $fileName = $directoryName . $file['name'];
 
         // Set the container name where the file will be stored
         $containerName = 'azureml-blobstore-fa29c537-9f94-4f15-8679-5f1e2fd597e4';
