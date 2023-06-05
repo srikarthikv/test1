@@ -1,49 +1,58 @@
-<?php
-require_once 'autoload.php'; // Load the required Azure Blob Storage SDK
-
-use MicrosoftAzure\Storage\Blob\BlobRestProxy;
-use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
-
-$connectionString = 'DefaultEndpointsProtocol=https;AccountName=gptdemo7020140432;AccountKey=k3z0/JCQH3yV/9iSceGe+s1dtdIUbp8anSUQ/a0sDsrw34tuFHfd7usPn42bCvjaUdzlfpNvA09O+AStCRDO3w==;EndpointSuffix=core.windows.net';
-$containerName = 'azureml-blobstore-fa29c537-9f94-4f15-8679-5f1e2fd597e4';
-$directoryName = 'documents/';
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $file = $_FILES["fileToUpload"];
-
-    if ($file["error"] === UPLOAD_ERR_OK) {
-        $fileName = $file["name"];
-        $fileTempPath = $file["tmp_name"];
-        $fileSize = $file["size"];
-
-        $blobClient = BlobRestProxy::createBlobService($connectionString);
-
-        // Generate a unique name for the blob using a GUID
-        $uniqueBlobName = $directoryName . uniqid() . '-' . $fileName;
-
-        // Set the blob options
-        $options = new CreateBlockBlobOptions();
-        $options->setContentType($file["type"]);
-
-        // Upload the file to Azure Blob Storage
-        $blobClient->createBlockBlob($containerName, $uniqueBlobName, fopen($fileTempPath, "r"), $options);
-
-        echo "File uploaded successfully. Blob name: $uniqueBlobName";
-    } else {
-        echo "Error uploading file. Error code: " . $file["error"];
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html>
+
+<head>
+    <title>File Upload</title>
+</head>
+
 <body>
-    <h1>File Upload</h1>
+    <h1>Upload a File</h1>
 
     <form action="" method="POST" enctype="multipart/form-data">
-        <label for="fileToUpload">Select file (PDF or TXT):</label>
-        <input type="file" name="fileToUpload" id="fileToUpload" accept=".pdf,.txt"><br>
-        <button type="submit">Upload File</button>
+        <input type="file" name="uploadedFile" />
+        <input type="submit" value="Upload" />
     </form>
+	<?php
+
+	// Required Azure Blob Storage libraries
+	require_once 'vendor/autoload.php';
+
+	use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+	use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
+	use MicrosoftAzure\Storage\Blob\Models\Blob;
+	use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+
+	// Azure Blob Storage connection string
+	$connectionString = 'DefaultEndpointsProtocol=https;AccountName=gptdemo7020140432;AccountKey=k3z0/JCQH3yV/9iSceGe+s1dtdIUbp8anSUQ/a0sDsrw34tuFHfd7usPn42bCvjaUdzlfpNvA09O+AStCRDO3w==;EndpointSuffix=core.windows.net';
+	$directoryName = 'documents/';
+	
+	// Create a BlobRestProxy instance
+	$blobClient = BlobRestProxy::createBlobService($connectionString);
+
+	// Check if a file is uploaded
+	if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['uploadedFile'])) {
+		$file = $_FILES['uploadedFile'];
+
+		// Generate a unique name for the file
+		$fileName = $directoryName . uniqid() . '_' . $file['name'];
+
+		// Set the container name where the file will be stored
+		$containerName = 'azureml-blobstore-fa29c537-9f94-4f15-8679-5f1e2fd597e4';
+
+		try {
+		    // Upload the file to Azure Blob Storage
+		    $blobClient->createBlockBlob($containerName, $fileName, fopen($file['tmp_name'], 'r'));
+
+		    echo 'File uploaded successfully!';
+		} catch (ServiceException $e) {
+		    $code = $e->getCode();
+		    $error_message = $e->getMessage();
+		    echo "Failed to upload the file. Error message: $error_message";
+		}
+	}
+	?>
+    
 </body>
+
 </html>
