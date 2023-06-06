@@ -12,16 +12,7 @@
         <input type="file" name="uploadedFile" />
         <input type="submit" value="Upload" />
     </form>
-    <h1>Query Page</h1>
-
-    <form action="indexquery.php" method="GET">
-        <input type="text" name="query" placeholder="Enter your query">
-        <button type="submit" name="submit">Query</button>
-    </form>
     <?php
-   
-
-
     // Enable error reporting
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
@@ -56,12 +47,23 @@
             $blobClient->createBlockBlob($containerName, $fileName, fopen($file['tmp_name'], 'r'));
 
             echo 'File uploaded successfully!';
+
+            // Send a POST request to the Flask server with the file path
+            $flaskServerUrl = 'http://localhost:8000/embed';
+            $postData = array('file_path' => $fileName);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $flaskServerUrl);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            curl_exec($ch);
+            curl_close($ch);
         } catch (ServiceException $e) {
             $code = $e->getCode();
             $error_message = $e->getMessage();
             echo "Failed to upload the file. Error message: $error_message";
         }
     }
+
     ?>
 
 </body>
