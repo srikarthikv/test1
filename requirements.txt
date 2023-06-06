@@ -7,5 +7,3 @@ langchain
 tenacity
 llama_index
 gpt_index
-streamlit
-jira
