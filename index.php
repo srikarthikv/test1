@@ -12,7 +12,7 @@
 	    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		// Retrieve the question from the form
 		$question = $_POST['question'];
-		$document = $_POST['document']
+		$document = $_POST['document'];
 
 		// Set the request URL
 		$url = 'http://10.1.0.4:8000/qanda';
