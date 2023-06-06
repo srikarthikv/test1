@@ -3,7 +3,109 @@
 <head>
     <title>BRT-GPT</title>
     <style>
-        /* CSS styles omitted for brevity */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .chat-container {
+            width: 80%;
+            max-width: 600px;
+            height: 80%;
+            max-height: 600px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background-color: skyblue;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .chat-body {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin: 10px 10px;
+        }
+
+        .user-message {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            align-self: flex-end;
+            max-width: 70%;
+        }
+
+        .bot-message {
+            background-color: #e5e5ea;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            align-self: flex-start;
+            max-width: 70%;
+        }
+
+        .input-container {
+            display: flex;
+            margin-top: 10px;
+            padding: 0 20px;
+        }
+
+        .input-container input[type="text"] {
+            flex: 1;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .input-container button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: skyblue;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .options-container {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .options-container label {
+            margin-right: 10px;
+        }
+
+        .options-container select {
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
