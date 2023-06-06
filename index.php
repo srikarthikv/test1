@@ -147,7 +147,7 @@
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve the question, compress option, and vectorstore option from the form
             $question = $_POST['question'];
-            $compressOption = $_POST['compress-option'];
+            $detailedOption = $_POST['detailed-option'];
             $vectorstoreOption = $_POST['vectorstore-option'];
 
             // Set the request URL
@@ -156,7 +156,7 @@
             // Set the request data
             $data = array(
                 'question' => $question,
-                'compress' => $compressOption,
+                'detailed' => $detailedOption,
                 'vectorstore' => $vectorstoreOption,
             );
 
