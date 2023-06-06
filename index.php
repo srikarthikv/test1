@@ -5,6 +5,7 @@
 </head>
 <body>
 	    <h1>Hello, PHP!</h1>
+	
 	    <p>This is a PHP web app that sends a POST request.</p>
 
 	    <?php
@@ -47,6 +48,8 @@
 	    <form action="" method="POST">
 		<label for="question">Question:</label>
 		<input type="text" name="question" id="question" required><br>
+		<input type="radio" name="document" value="aws_general_vectorstore.pkl">aws_general_vectorstore.pkl<br>
+                <input type="radio" name="document" value="cisco-catalyst-9164-series-access-points-ds_vectorstore.pkl">cisco-catalyst-9164-series-access-points-ds_vectorstore.pkl<br>
 
 		<button type="submit">Submit</button>
 	    </form>
