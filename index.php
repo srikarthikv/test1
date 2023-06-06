@@ -22,7 +22,6 @@
                     <option value="no">No</option>
                 </select>
             </div>
-
             <div class="options-container">
                 <label for="vectorstore-option">Select Vectorstore:</label>
                 <select name="vectorstore-option" id="vectorstore-option">
@@ -32,13 +31,11 @@
                     <!-- Add more options as needed -->
                 </select>
             </div>
-
             <div class="input-container">
                 <input type="text" name="question" id="question" required>
                 <button type="submit">Send</button>
             </div>
         </form>
-
         <?php
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Retrieve the question, compress option, and vectorstore option from the form
