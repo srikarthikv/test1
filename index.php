@@ -12,6 +12,12 @@
         <input type="file" name="uploadedFile" />
         <input type="submit" value="Upload" />
     </form>
+    <h1>Query Page</h1>
+
+    <form action="next_page.php" method="GET">
+        <input type="text" name="query" placeholder="Enter your query">
+        <button type="submit" name="submit">Query</button>
+    </form>
     <?php
    
 
