@@ -156,8 +156,8 @@
             // Set the request data
             $data = array(
                 'question' => $question,
-                'detailed' => $detailedOption,
-                'vectorstore' => $vectorstoreOption,
+                'detailed-option' => $detailedOption,
+                'vectorstore-option' => $vectorstoreOption,
             );
 
             // Initialize cURL session
