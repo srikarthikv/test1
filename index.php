@@ -1,98 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PHP Web App</title>
+    <title>File Upload</title>
 </head>
 <body>
-    <h1>Document Upload</h1>
+    <h1>Upload a File</h1>
 
     <form action="" method="POST" enctype="multipart/form-data">
-        <label for="document">Document:</label>
-        <input type="file" name="document" id="document" required><br>
-
-        <button type="submit">Upload</button>
+        <input type="file" name="uploadedFile" />
+        <input type="submit" value="Upload" />
     </form>
 
     <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Retrieve the document file
-        $documentFile = $_FILES['document'];
+    // Enable error reporting
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
-        // Set the URL of the server
-        $url = 'http://10.1.0.4:8000//qanda';
+    // Required Azure Blob Storage libraries
+    require_once 'vendor/autoload.php';
 
-        // Create a cURL handle
-        $curl = curl_init();
+    use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+    use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
+    use MicrosoftAzure\Storage\Blob\Models\Blob;
+    use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
 
-        // Set the cURL options
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
+    // Azure Blob Storage connection string
+    $connectionString = 'DefaultEndpointsProtocol=https;AccountName=gptdemo7020140432;AccountKey=k3z0/JCQH3yV/9iSceGe+s1dtdIUbp8anSUQ/a0sDsrw34tuFHfd7usPn42bCvjaUdzlfpNvA09O+AStCRDO3w==;EndpointSuffix=core.windows.net';
+    $directoryName = 'documents/';
 
-        // Create an array with the POST data
-        $postData = array(
-            'document' => curl_file_create($documentFile['tmp_name'], $documentFile['type'], $documentFile['name'])
-        );
+    // Create a BlobRestProxy instance
+    $blobClient = BlobRestProxy::createBlobService($connectionString);
 
-        // Set the POST data
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
+    // Check if a file is uploaded
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['uploadedFile'])) {
+        $file = $_FILES['uploadedFile'];
 
-        // Execute the request and get the response
-        $response = curl_exec($curl);
+        // Generate a unique name for the file
+        $fileName = $directoryName . $file['name'];
 
-        // Check for cURL errors
-        if (curl_errno($curl)) {
-            $error = curl_error($curl);
-            // Handle the error
-            // ...
-        } else {
-            // Process the response
-            // ...
+        // Set the container name where the file will be stored
+        $containerName = 'azureml-blobstore-fa29c537-9f94-4f15-8679-5f1e2fd597e4';
+
+        try {
+            // Upload the file to Azure Blob Storage
+            $blobClient->createBlockBlob($containerName, $fileName, fopen($file['tmp_name'], 'r'));
+
+            echo 'File uploaded successfully!';
+        } catch (ServiceException $e) {
+            $code = $e->getCode();
+            $error_message = $e->getMessage();
+            echo "Failed to upload the file. Error message: $error_message";
         }
-
-        // Close the cURL handle
-        curl_close($curl);
     }
     ?>
 
-    <script>
-        document.getElementById('uploadForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+    <h1>Hello, PHP!</h1>
+    <p>This is a PHP web app that sends a POST request.</p>
 
-            var fileInput = document.getElementById('document');
-            var file = fileInput.files[0];
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Retrieve the question from the form
+        $question = $_POST['question'];
 
-            var formData = new FormData();
-            formData.append('document', file);
+        // Set the request URL
+        $url = 'http://10.1.0.4:8000/qanda';
 
-            fetch('http://10.1.0.4:8000/embedding', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    document: file.name
-                })
-            })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(data) {
-                console.log(data);
-                // Handle the response data as desired
-            })
-            .catch(function(error) {
-                console.log('Error:', error);
-            });
-        });
-    </script>
+        // Set the request data
+        $data = array(
+            'question' => $question,
+        );
+
+        // Initialize cURL session
+        $ch = curl_init();
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+
+        // Execute the request
+        $response = curl_exec($ch);
+
+        // Check for errors
+        if (curl_errno($ch)) {
+            echo 'Error: ' . curl_error($ch);
+        } else {
+            // Output the response
+            echo $response;
+        }
+
+        // Close cURL session
+        curl_close($ch);
+    }
+    ?>
 
     <form action="" method="POST">
         <label for="question">Question:</label>
         <input type="text" name="question" id="question" required><br>
-        <label for="document">Document:</label>
-        <input type="file" name="document" id="document" required><br>
-
         <button type="submit">Submit</button>
     </form>
 </body>
