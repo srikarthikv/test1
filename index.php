@@ -14,7 +14,7 @@
     </form>
     <h1>Query Page</h1>
 
-    <form action="next_page.php" method="GET">
+    <form action="indexquery.php" method="GET">
         <input type="text" name="query" placeholder="Enter your query">
         <button type="submit" name="submit">Query</button>
     </form>
