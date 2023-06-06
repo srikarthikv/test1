@@ -13,6 +13,13 @@
         <input type="submit" value="Upload" />
     </form>
     <?php
+    // Set the maximum file size in bytes (e.g., 20MB)
+    $maxFileSize = 20 * 1024 * 1024; // 20MB
+
+    // Increase the maximum file size limit
+    ini_set('upload_max_filesize', $maxFileSize);
+    ini_set('post_max_size', $maxFileSize);
+
 
     // Enable error reporting
     error_reporting(E_ALL);
