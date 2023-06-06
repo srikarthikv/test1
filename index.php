@@ -49,7 +49,7 @@
             echo 'File uploaded successfully!';
 
             // Send a POST request to the Flask server with the file path
-            $flaskServerUrl = 'http://localhost:8000/embed';
+            $flaskServerUrl = 'https://10.1.0.4:8000/embed';
             $postData = array('file_path' => $fileName);
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $flaskServerUrl);
