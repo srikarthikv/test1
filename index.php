@@ -120,8 +120,8 @@
             <div class="options-container">
                 <label for="detailed-option">Detailed:</label>
                 <select name="detailed-option" id="detailed-option">
-                    <option value="yes">Yes</option>
                     <option value="no">No</option>
+                    <option value="yes">Yes</option>
                 </select>
             </div>
             <div class="options-container">
@@ -135,6 +135,10 @@
                     <option value="vectors/codecatalyst_ug_vectorstore.pkl">Code Catalyst User Guide</option>
                     <option value="vectors/sagemaker_api_vectorstore.pkl">Sagemaker API Guide</option>
                     <option value="vectors/sagemaker_dg_vectorstore.pkl">Sagemaker Developer Guide</option>
+                    <option value="vectors/cisco_merged_vectorstore.pkl">Cisco-Merged</option>
+                    <option value="vectors/codecatalyst_merged_vectorstore.pkl">Code Catalyst-Merged</option>
+                    <option value="vectors/sagemaker_merged_vectorstore.pkl">Sagemaker-Merged</option>
+                    <option value="vectors/merged_vectorstore.pkl">All-Merged</option>
                     <!-- Add more options as needed -->
                 </select>
             </div>
