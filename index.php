@@ -155,7 +155,7 @@
             $vectorstoreOption = $_POST['vectorstore-option'];
 
             // Set the request URL
-            $url = 'https://10.1.0.4:80/question';
+            $url = 'https://20.127.39.47:443/question';
 
             // Set the request data
             $data = array(
