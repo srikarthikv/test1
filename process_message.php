@@ -14,9 +14,18 @@ if (isset($_POST['send_button'])) {
     // Close the file handle
     fclose($handle);
 
-    // Call a function or make an API request to your chatbot backend to get the chatbot's response
-    // Replace the placeholder below with your actual chatbot logic
-    $chatbotResponse = getChatbotResponse($userMessage);
+    // Make a request to the Flask server running on your Azure VM
+    $flaskServerUrl = 'http://<your-vm-ip-address>:5000/get_chatbot_response';
+    $data = array('user_message' => $userMessage);
+    $options = array(
+        'http' => array(
+            'method' => 'POST',
+            'header' => 'Content-type: application/x-www-form-urlencoded',
+            'content' => http_build_query($data),
+        ),
+    );
+    $context = stream_context_create($options);
+    $chatbotResponse = file_get_contents($flaskServerUrl, false, $context);
 
     // Save the chatbot's response to the text file
     $handle = fopen($file, 'a');
