@@ -10,7 +10,7 @@
         }
         
         #chat-container {
-            max-width: 1920px;
+            max-width: 800px;
             margin: 150px auto;
             background-color: #fff;
             border-radius: 8px;
@@ -20,7 +20,7 @@
         
         #chat-header {
             background-color: #0cb3c4;
-            padding: 30px;
+            padding: 50px;
             text-align: ;
             border-radius: 8px 8px 0 0;
             display: flex;
@@ -30,22 +30,22 @@
         
         #chat-header h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 50px;
             color: #fff;
             flex-grow: 1;
             margin-right: 0px;
         }
         
         #chat-header img {
-            width: 40px;
-            height: 40px;
+            width: 100px;
+            height: 100px;
             vertical-align: middle;
             margin-right: 22px;
         }
         
         #chat-thread {
             overflow-y: auto;
-            max-height: 1080px;
+            max-height: 600px;
             padding-bottom: 15px;
         }
         
@@ -83,7 +83,7 @@
         }
         
         #user-input input[type="text"] {
-            width: 83%;
+            width: 88%;
             padding: 10px;
             border:none ;
             border-radius: 4px;
