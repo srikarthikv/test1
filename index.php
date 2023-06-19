@@ -17,31 +17,57 @@
             padding: 20px;
         }
         
+        #chat-header {
+            background-color: lightblue;
+            padding: 10px;
+            text-align: right;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        #chat-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #fff;
+            flex-grow: 1;
+      		margin-right: 50px;
+        }
+        
+        #chat-header img {
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+      		margin-right: 20px
+        }
+        
         #chat-thread {
             overflow-y: auto;
             max-height: 300px;
             padding-bottom: 10px;
         }
         
-        .message {
-            padding: 10px;
-            border-radius: 8px;
+        .message-container {
             margin-bottom: 10px;
-            max-width: 80%;
         }
         
         .user-message {
-            background-color: #dbf7c9;
+            background-color: #d3d3d3;
+            color: #000;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
             align-self: flex-start;
         }
         
         .bot-message {
-            background-color: #d2d2d2;
+            background-color: #c1f2c1;
+            color: #000;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
             align-self: flex-end;
-        }
-        
-        .message p {
-            margin: 0;
         }
         
         #user-input {
@@ -66,6 +92,10 @@
 </head>
 <body>
     <div id="chat-container">
+        <div id="chat-header">
+            <h1>Chatbot - Technical Support</h1>
+            <img src="logo.png" alt="Chatbot Logo">
+        </div>
         <div id="chat-thread">
             <?php include 'display_messages.php'; ?>
         </div>
