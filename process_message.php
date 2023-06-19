@@ -15,7 +15,7 @@ if (isset($_POST['send_button'])) {
     fclose($handle);
 
     // Make a request to the Flask server running on your Azure VM
-    $flaskServerUrl = 'http://<your-vm-ip-address>:5000/get_chatbot_response';
+    $flaskServerUrl = 'http://10.1.0.4:8000/get_chatbot_response';
     $data = array('user_message' => $userMessage);
     $options = array(
         'http' => array(
