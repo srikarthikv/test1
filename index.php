@@ -19,7 +19,7 @@
         
         #chat-header {
             background-color: lightblue;
-            padding: 10px;
+            padding: 30px;
             text-align: right;
             border-radius: 8px 8px 0 0;
             display: flex;
@@ -32,14 +32,14 @@
             font-size: 24px;
             color: #fff;
             flex-grow: 1;
-      		margin-right: 50px;
+            margin-right: 50px;
         }
         
         #chat-header img {
             width: 40px;
             height: 40px;
             vertical-align: middle;
-      		margin-right: 20px
+            margin-right: 20px;
         }
         
         #chat-thread {
@@ -58,7 +58,9 @@
             padding: 10px;
             border-radius: 8px;
             max-width: 80%;
-            align-self: flex-start;
+            align-self: flex-end;
+            text-align: right;
+            margin-bottom: 10px;
         }
         
         .bot-message {
@@ -67,7 +69,8 @@
             padding: 10px;
             border-radius: 8px;
             max-width: 80%;
-            align-self: flex-end;
+            align-self: flex-start;
+            margin-bottom: 10px;
         }
         
         #user-input {
