@@ -45,7 +45,7 @@
         
         #chat-thread {
             overflow-y: auto;
-            max-height: 600px;
+            max-height: 500px;
             padding-bottom: 15px;
         }
         
