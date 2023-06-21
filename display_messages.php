@@ -18,10 +18,17 @@ foreach ($messages as $message) {
     $messageType = trim($messageParts[0]);
     $messageContent = trim($messageParts[1]);
 
+    // Split the message content into lines or points
+    $lines = explode("\n", $messageContent);
+
     if ($messageType === 'User') {
-        echo '<div class="user-message">' . $messageContent . '</div>';
+        foreach ($lines as $line) {
+            echo '<div class="user-message">' . $line . '</div>';
+        }
     } elseif ($messageType === 'Chatbot') {
-        echo '<div class="chatbot-response">' . $messageContent . '</div>';
+        foreach ($lines as $line) {
+            echo '<div class="chatbot-response">' . $line . '</div>';
+        }
     }
 }
 ?>
