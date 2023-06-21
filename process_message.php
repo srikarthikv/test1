@@ -27,15 +27,21 @@ if (isset($_POST['send_button'])) {
     $context = stream_context_create($options);
     $chatbotResponse = file_get_contents($flaskServerUrl, false, $context);
 
-    // Save the chatbot's response to the text file
+    // Split the chatbot's response into lines or points
+    $lines = explode("\n", $chatbotResponse);
+
+    // Open the file in append mode again
     $handle = fopen($file, 'a');
 
-    // Write the chatbot's response to the file
-    fwrite($handle, "Chatbot: " . $chatbotResponse . PHP_EOL);
+    // Write each line or point of the chatbot's response to the file
+    foreach ($lines as $line) {
+        fwrite($handle, "Chatbot: " . trim($line) . PHP_EOL);
+    }
 
     // Close the file handle
     fclose($handle);
 }
+
 header('Location: index.php'); // Redirect back to the chat UI
 exit;
 ?>
